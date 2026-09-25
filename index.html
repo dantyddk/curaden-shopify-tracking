@@ -261,7 +261,7 @@ function loadDashboardData() {
     if (activeRequest !== script) return;
     script.remove(); activeRequest = null;
     document.getElementById('dataThrough').textContent = DATA ? 'Refresh timed out' : 'Loading timed out';
-  }, 30000);
+  }, 90000);
   document.head.appendChild(script);
 }
 loadDashboardData();
