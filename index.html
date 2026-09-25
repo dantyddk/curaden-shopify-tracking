@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Curaprox | Shopify Launch Performance</title>
+  <style>
+    :root{--ink:#111;--muted:#6b7280;--line:#e5e7eb;--soft:#f5f6f7;--yellow:#ffd500;--blue:#246bfe;--green:#07875d;--red:#d63f3f;--card:#fff}
+    *{box-sizing:border-box} body{margin:0;background:#f1f2f3;color:var(--ink);font:14px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    .top{height:9px;background:var(--yellow)} .wrap{max-width:1440px;margin:auto;padding:26px 30px 42px}
+    header{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin-bottom:22px}
+    .brand{display:flex;gap:15px;align-items:center}.logo{width:48px;height:48px;border-radius:13px;background:var(--yellow);display:grid;place-items:center;font-weight:950;font-size:21px;letter-spacing:-2px;box-shadow:0 7px 18px #d6b40033}
+    h1{font-size:28px;line-height:1.12;margin:0 0 6px;letter-spacing:-.7px}.sub{color:var(--muted);font-size:13px}
+    .controls{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}.seg{background:white;border:1px solid var(--line);border-radius:12px;padding:4px;display:flex;box-shadow:0 2px 8px #00000008}.seg button{border:0;background:transparent;padding:8px 13px;border-radius:9px;font-weight:750;cursor:pointer}.seg button.active{background:#111;color:#fff}.updated{padding:9px 12px;background:#fff;border:1px solid var(--line);border-radius:12px;color:var(--muted)}
+    .hero{background:#111;color:white;border-radius:20px;padding:22px 24px;display:grid;grid-template-columns:1.45fr .55fr;gap:22px;margin-bottom:18px;overflow:hidden;position:relative}.hero:after{content:"";position:absolute;width:240px;height:240px;border-radius:50%;background:var(--yellow);right:-110px;top:-120px;opacity:.95}.hero h2{font-size:18px;margin:0 0 8px}.hero p{margin:0;color:#c8c8c8;max-width:750px}.launch{border-left:1px solid #3d3d3d;padding-left:22px;z-index:1}.launch b{display:block;color:var(--yellow);font-size:12px;text-transform:uppercase;letter-spacing:.9px;margin-bottom:5px}.launch span{display:block;font-size:16px;font-weight:750}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:12px;margin-bottom:18px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 2px 10px #00000008}.card .label{font-size:11px;text-transform:uppercase;letter-spacing:.55px;color:var(--muted);font-weight:800}.card .value{font-size:25px;font-weight:850;letter-spacing:-.7px;margin:8px 0 4px}.delta{font-size:12px;font-weight:750}.up{color:var(--green)}.down{color:var(--red)}.flat{color:var(--muted)}.hint{font-size:11px;color:#9ca3af;margin-top:3px}.post-only{color:var(--pink);font-weight:750}
+    .main{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(260px,1fr);gap:16px;margin-bottom:16px;min-width:0}.main>*{min-width:0}.panel{background:white;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 2px 10px #00000008;min-width:0;overflow:hidden}.panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px;gap:12px}.panel h3{margin:0;font-size:16px}.legend{display:flex;gap:13px;color:var(--muted);font-size:11px}.dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:5px}.dot.b{background:#111}.dot.p{background:var(--yellow);border:1px solid #d1ad00}
+    .chart-tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end;min-width:0}.chart-tools label{font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);font-weight:800}.chart-tools input,.chart-tools select{border:1px solid var(--line);border-radius:9px;padding:7px 8px;background:#fff;font:inherit;font-weight:650;max-width:145px}.chart-tools button{border:1px solid var(--line);background:#f7f7f7;border-radius:9px;padding:7px 10px;font-weight:750;cursor:pointer}.chart-stage{position:relative;min-width:0}.chart-y-axis{position:absolute;left:0;top:0;width:54px;height:295px;z-index:3;background:#fff;border-right:1px solid #edf0f3;pointer-events:none;filter:drop-shadow(3px 0 3px #00284912)}.chart-scroll{display:block;width:100%;max-width:100%;min-width:0;overflow-x:scroll;overflow-y:hidden;padding:0 0 12px;scrollbar-color:#969a9f #eceef0;scrollbar-width:auto}.chart-scroll::-webkit-scrollbar{height:12px}.chart-scroll::-webkit-scrollbar-track{background:#eceef0;border-radius:10px}.chart-scroll::-webkit-scrollbar-thumb{background:#969a9f;border:2px solid #eceef0;border-radius:10px}.chart-scroll::-webkit-scrollbar-thumb:hover{background:#6f747a}.trend-svg{width:auto;max-width:none;min-width:760px;height:295px;display:block;flex:none}.axis-label{fill:#8b9099;font-size:10px}.gridline{stroke:#eceef0;stroke-width:1}.baseline{fill:none;stroke:#111;stroke-width:2.3}.postline{fill:none;stroke:#e0b800;stroke-width:3}.area{fill:#ffd50022}.point{fill:#ffd500;stroke:#111;stroke-width:1.2}.tooltip{position:fixed;pointer-events:none;background:#111;color:#fff;padding:8px 10px;border-radius:8px;font-size:12px;display:none;z-index:10;box-shadow:0 7px 20px #0004}
+    .compare-row{display:grid;grid-template-columns:95px 1fr 54px;align-items:center;gap:9px;margin:14px 0}.compare-row .name{font-size:12px;font-weight:700}.track{height:12px;background:#f1f2f3;border-radius:10px;overflow:hidden;display:flex}.before{height:100%;background:#111}.after{height:100%;background:var(--yellow)}.pct{text-align:right;font-weight:800;font-size:12px}
+    .bottom{display:grid;grid-template-columns:1fr;gap:16px}.table-wrap{overflow:auto;max-height:360px}table{width:100%;border-collapse:collapse;font-size:12px}th{position:sticky;top:0;background:#fff;text-align:right;color:var(--muted);padding:9px;border-bottom:1px solid var(--line);white-space:nowrap}th:first-child,td:first-child{text-align:left}td{text-align:right;padding:8px 9px;border-bottom:1px solid #f0f1f2;white-space:nowrap}.pill{display:inline-block;padding:3px 7px;border-radius:999px;font-size:10px;font-weight:800;background:#fff5ba;color:#6f5b00}
+    .promo-usage-table th,.promo-usage-table td{text-align:left;white-space:normal;min-width:110px;vertical-align:top}.promo-usage-table th:first-child,.promo-usage-table td:first-child{min-width:130px}
+    footer{display:flex;justify-content:space-between;gap:18px;color:#8b9099;font-size:11px;margin-top:15px;padding:0 3px}.warning{color:#8a5a00;background:#fff8d8;border:1px solid #f1d96e;padding:9px 11px;border-radius:10px;margin-top:12px;font-size:11px}
+    /* Curaprox-inspired visual system */
+    :root{--ink:#002849;--body:#595959;--muted:#747474;--line:#d6d6d6;--soft:#f6f8fb;--blue:#003da5;--cyan:#00a3e0;--pink:#e31c79;--lime:#97d700;--purple:#702f8a;--green:#677f60;--red:#c72f51;--card:#fff}
+    body{background:var(--soft);color:var(--body);font-family:ff-info-display-web-pro,Helvetica,Arial,sans-serif;font-weight:300}
+    .top{background:linear-gradient(90deg,var(--blue) 0 42%,var(--cyan) 42% 62%,var(--lime) 62% 78%,var(--pink) 78%)}
+    .logo{width:auto;min-width:118px;padding:0 15px;border-radius:24px;background:var(--blue);color:#fff;font:700 17px/1 futura-pt,Tahoma,Arial,sans-serif;letter-spacing:1.6px;box-shadow:0 8px 20px #003da526}
+    h1{color:var(--ink);font:500 29px/1.12 futura-pt,Tahoma,Arial,sans-serif;letter-spacing:-.35px}
+    .seg{border-radius:24px;box-shadow:none}.seg button{color:var(--blue);border-radius:18px}.seg button.active{background:var(--blue);color:#fff}.updated{border-radius:22px}
+    .card{border-color:var(--line);border-top:4px solid var(--blue);border-radius:19px;padding-top:15px;box-shadow:0 5px 18px #0028490b}.card:nth-child(2){border-top-color:var(--cyan)}.card:nth-child(3){border-top-color:var(--lime)}.card:nth-child(4){border-top-color:var(--purple)}.card:nth-child(5){border-top-color:var(--pink)}.card:nth-child(6){border-top-color:var(--ink)}
+    .card .value{color:var(--ink);font:500 26px/1.2 futura-pt,Tahoma,Arial,sans-serif;letter-spacing:-.4px}.card .label{font-weight:700}.delta{font-weight:700}
+    .panel{border-color:var(--line);border-radius:22px;box-shadow:0 5px 18px #0028490b}.panel h3{color:var(--ink);font:500 18px/1.2 futura-pt,Tahoma,Arial,sans-serif}
+    .dot.b{background:var(--blue)}.dot.p{background:var(--pink);border:0}.baseline{stroke:var(--blue)}.postline{stroke:var(--pink)}.area{fill:#e31c7915}.point{fill:var(--pink);stroke:var(--ink)}
+    .chart-tools input,.chart-tools select{color:var(--ink);border-radius:18px;padding-left:10px}.chart-tools button{color:var(--blue);background:#fff;border-color:var(--blue);border-radius:18px}.chart-tools button:hover{color:#fff;background:var(--blue)}
+    .chart-scroll{scrollbar-color:var(--blue) #e8eef8}.chart-scroll::-webkit-scrollbar-track{background:#e8eef8}.chart-scroll::-webkit-scrollbar-thumb{background:var(--blue);border-color:#e8eef8}.chart-scroll::-webkit-scrollbar-thumb:hover{background:var(--cyan)}
+    .tooltip{background:var(--ink);border-radius:10px;box-shadow:0 8px 22px #00284940}.compare-row .name{color:var(--ink)}.track{background:#edf1f7}.before{background:var(--blue)}.after{background:var(--pink)}
+    th{background:#eef5ff;color:var(--blue);border-bottom-color:#c9daef}tbody tr:hover{background:#f6faff}.pill{background:#eaf2ff;color:var(--blue)}.warning{color:var(--blue);background:#eef8fd;border-color:#b8e3f3;border-radius:12px}.analytics-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:16px;margin-top:16px;align-items:stretch}.analytics-grid>.panel{height:100%}.insight-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:14px}.mini-card{background:#f6faff;border:1px solid #d8e6f6;border-radius:16px;padding:14px}.mini-card .mini-label{color:var(--muted);font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase}.mini-card .mini-value{color:var(--ink);font:500 24px/1.2 futura-pt,Tahoma,Arial,sans-serif;margin-top:6px}.method-bar{display:grid;grid-template-columns:minmax(105px,1fr) 2fr 64px;align-items:center;gap:9px;margin:11px 0}.method-name{font-size:12px;font-weight:700;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.method-track{height:10px;background:#edf1f7;border-radius:10px;overflow:hidden}.method-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--cyan));border-radius:10px}.method-value{text-align:right;font-size:11px;font-weight:800}.section-note{margin-top:13px;padding:9px 11px;border-radius:12px;background:#fff4fa;border:1px solid #f4bad5;color:#8d2457;font-size:11px}.subsection{margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}.subsection-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}.subsection-head h4{margin:0;color:var(--ink);font:500 15px/1.2 futura-pt,Tahoma,Arial,sans-serif}.subsection-head span{color:var(--muted);font-size:10px}.compact-table{max-height:230px}.cell-sub{display:block;color:var(--muted);font-size:10px;margin-top:2px}.logic-panel{margin-top:16px}.logic-panel summary{display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;list-style:none;color:var(--ink);font:500 18px/1.2 futura-pt,Tahoma,Arial,sans-serif}.logic-panel summary::-webkit-details-marker{display:none}.logic-panel summary:after{content:'+';width:26px;height:26px;border:1px solid var(--blue);border-radius:50%;display:grid;place-items:center;color:var(--blue);font:700 18px/1 Arial}.logic-panel[open] summary:after{content:'−'}.logic-intro{color:var(--muted);font-size:12px;margin:10px 0 14px}.logic-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.logic-item{background:#f7faff;border:1px solid #d8e6f6;border-radius:14px;padding:12px}.logic-item b{display:block;color:var(--blue);font-size:11px;text-transform:uppercase;letter-spacing:.35px;margin-bottom:5px}.logic-item span{font-size:12px}.logic-item code{display:block;margin-top:7px;padding:6px 8px;border-radius:8px;background:#fff;color:var(--ink);font:600 11px/1.35 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:normal}.logic-scope{grid-column:1/-1;background:#fff9e6;border-color:#f0d875}.logic-scope b{color:#806500}
+    @media(max-width:1050px){.grid{grid-template-columns:repeat(3,1fr)}.main,.bottom,.analytics-grid{grid-template-columns:minmax(0,1fr)}.logic-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:700px){.wrap{padding:18px 14px 30px}header,.hero{grid-template-columns:1fr;display:grid}.launch{border-left:0;border-top:1px solid #3d3d3d;padding:15px 0 0}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.controls{justify-content:flex-start}.panel-head{align-items:flex-start;flex-direction:column}.chart-tools{justify-content:flex-start}.card .value{font-size:21px}.logo{min-width:105px;font-size:15px}.insight-cards,.logic-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="top"></div>
+<div class="wrap">
+  <header>
+    <div class="brand"><div class="logo">CURAPROX</div><div><h1>Shopify Launch Performance</h1><div class="sub">Curaprox Digital Commerce · UAE & Switzerland · <span id="currencyLabel">Values shown in EUR</span></div></div></div>
+    <div class="controls"><div class="seg" id="countryToggle"><button data-country="AE" class="active">UAE</button><button data-country="CH">Switzerland</button></div><div class="seg" id="currencyToggle"><button data-currency-mode="EUR" class="active">EUR</button><button data-currency-mode="LOCAL" id="localCurrencyButton">AED</button></div><div class="updated">Data through <b id="dataThrough">Loading…</b></div></div>
+  </header>
+  <details class="panel logic-panel" open>
+    <summary>Metric definitions &amp; calculation logic</summary>
+    <div class="logic-intro">Definitions below reflect the formulas used in this dashboard. All monetary calculations follow the selected currency toggle.</div>
+    <div class="logic-grid">
+      <div class="logic-item logic-scope"><b>Order scope &amp; launch split</b><span>Post-launch KPIs include completed and paid orders only; refunded orders are excluded. UAE benchmark ends 25 Aug 2026 and post-launch starts 26 Aug. Switzerland benchmark includes 3 Sep 2026 and post-launch starts 4 Sep.</span></div>
+      <div class="logic-item"><b>GMV_incTax</b><span>Merchandise value including tax and shipping.</span><code>Σ(Line-item quantity × Line-item price) + Shipping</code></div>
+      <div class="logic-item"><b>GMV_excTax</b><span>GMV after removing tax.</span><code>GMV_incTax − Taxes</code></div>
+      <div class="logic-item"><b>Net_incTax</b><span>Customer payment remaining after payment-gateway cost.</span><code>Actual Customer Paid − Paygatefee_inclTax</code></div>
+      <div class="logic-item"><b>Orders &amp; purchased users</b><span>Orders count eligible order IDs. Purchased users count unique customer emails per day.</span><code>Orders = COUNT(Order ID) · PU = COUNTUNIQUE(Email)</code></div>
+      <div class="logic-item"><b>Average order value</b><span>Average GMV generated by each eligible order.</span><code>AOV = GMV_incTax ÷ Orders</code></div>
+      <div class="logic-item"><b>%Promo burn</b><span>Discount cost relative to GMV excluding tax.</span><code>Discount Amount ÷ GMV_excTax</code></div>
+      <div class="logic-item"><b>Promo order</b><span>An order is promotional when it has a discount amount, a discount code, or a mapped promo type other than “No Discount”.</span><code>%Promo Order = Promo Orders ÷ Total Orders</code></div>
+      <div class="logic-item"><b>%Average promo discount</b><span>Weighted discount rate across promotional orders.</span><code>Σ Discount ÷ Σ(GMV_incTax + Discount)</code></div>
+      <div class="logic-item"><b>%Paygate fee</b><span>Payment-gateway cost as a share of the value collected after discount.</span><code>Σ Paygatefee_inclTax ÷ Σ(GMV_incTax − Discount)</code></div>
+      <div class="logic-item"><b>Promotion type distribution</b><span>Order share, total discount cost, average cost per order and weighted discount rate are calculated within promotional orders only.</span><code>%Promo orders = Promo-type Orders ÷ All Promo Orders</code></div>
+      <div class="logic-item"><b>Currency conversion</b><span>Source post-launch values are consolidated in EUR. Local-currency display reverses the country’s EUR conversion rate.</span><code>EUR = Local Amount × Currency Rate to EUR</code></div>
+    </div>
+  </details>
+  <section class="grid" id="cards"></section>
+  <section class="main">
+    <div>
+      <div class="panel" style="margin-bottom:16px"><div class="panel-head"><h3>Daily performance · Absolute metrics</h3><div class="chart-tools"><select id="absoluteMetricSelect"><option value="gmvInc">GMV_incTax</option><option value="gmvExc">GMV_excTax</option><option value="netInc">Net_incTax</option><option value="orders">Orders</option><option value="pu">Purchased users</option><option value="tax">Tax</option><option value="discount">Discount amount</option><option value="aov">AOV</option></select><label for="dateFrom">From</label><input type="date" id="dateFrom"><label for="dateTo">To</label><input type="date" id="dateTo"><button id="resetDates" type="button">Reset</button></div></div><div class="legend"><span><i class="dot b"></i>Pre-launch / Benchmark</span><span><i class="dot p"></i>Post-launch</span></div><div class="chart-stage"><svg id="absoluteYAxis" class="chart-y-axis" viewBox="0 0 54 295"></svg><div class="chart-scroll" id="absoluteChartScroll"><svg id="absoluteTrend" class="trend-svg" viewBox="0 0 760 295" preserveAspectRatio="none"></svg></div></div></div>
+      <div class="panel"><div class="panel-head"><h3>Daily performance · Percentage metrics</h3><div class="chart-tools"><select id="percentageMetricSelect"><option value="promo">%Promo burn</option><option value="promoOrderPct">%Promo Order</option><option value="paygateFeePct">%Paygate_fee</option></select></div></div><div class="legend"><span><i class="dot b"></i>Pre-launch / Benchmark</span><span><i class="dot p"></i>Post-launch</span></div><div class="chart-stage"><svg id="percentageYAxis" class="chart-y-axis" viewBox="0 0 54 295"></svg><div class="chart-scroll" id="percentageChartScroll"><svg id="percentageTrend" class="trend-svg" viewBox="0 0 760 295" preserveAspectRatio="none"></svg></div></div><div class="warning">Both charts use the same date range. The value axes remain fixed while the timelines scroll horizontally.</div></div>
+    </div>
+    <div class="panel"><div class="panel-head"><h3>Post-launch vs benchmark</h3><span class="pill">Daily average</span></div><div id="comparison"></div></div>
+  </section>
+  <section class="bottom"><div class="panel"><div class="panel-head"><h3>Post-launch daily detail</h3><span class="pill" id="daysPill"></span></div><div class="table-wrap"><table><thead><tr><th>Date</th><th>GMV_incTax</th><th>GMV_excTax</th><th>Net_incTax</th><th>Discount amount</th><th>Orders</th><th>PU</th><th>AOV</th><th>%Promo burn</th><th>%Promo Order</th><th>%Paygate_fee</th></tr></thead><tbody id="dailyTable"></tbody></table></div></div></section>
+  <section class="analytics-grid">
+    <div class="panel"><div class="panel-head"><h3>Orders by payment method</h3><span class="pill">Post-launch</span></div><div id="paymentMethods"></div><div class="section-note">Tabby paygate fee data is not yet accessible and will be updated once available.</div><div class="subsection"><div class="subsection-head"><h4>Promotion type distribution</h4><span>Post-launch promo orders</span></div><div class="table-wrap compact-table"><table><thead><tr><th>Promo type</th><th>Orders</th><th>Total cost</th><th>Avg. cost/order</th><th>%Avg. discount</th></tr></thead><tbody id="promoTypeTable"></tbody></table></div></div></div>
+    <div class="panel"><div class="panel-head"><h3>Promotion usage</h3><span class="pill">Post-launch</span></div><div class="insight-cards"><div class="mini-card"><div class="mini-label">%Promo_Order</div><div class="mini-value" id="promoOrderPct">0%</div><div class="hint" id="promoOrderCount"></div></div><div class="mini-card"><div class="mini-label">%Average promo discount</div><div class="mini-value" id="avgPromoDiscountPct">0%</div><div class="hint">Weighted across promo orders</div></div></div><div class="table-wrap"><table class="promo-usage-table"><thead><tr><th>Discount code</th><th>Promo Discount</th><th>Promo Type</th><th>Promo Channel</th></tr></thead><tbody id="discountCodeTable"></tbody></table></div></div>
+  </section>
+  <footer><span>Source: Curaden Shopify · Benchmark & Consolidate tabs</span><span>Completed/paid orders; refunded orders excluded from post-launch KPIs</span></footer>
+</div><div class="tooltip" id="tooltip"></div>
+<script>
+// URL Web App hiện có. Sau khi cập nhật Code.gs, triển khai phiên bản mới
+// trong chính deployment này; nếu tạo deployment khác, thay URL bên dưới.
+const API_URL = 'https://script.google.com/macros/s/AKfycbxrP7lOmu4uEAmTkLENRvRupjc7_KdJMBHG6C4IUFWqTgUaFGwjq9j7YyMLS2KbjSOnjA/exec';
+let DATA = null;
+let country='AE',metric='gmv'; const eur=new Intl.NumberFormat('en-US',{style:'currency',currency:'EUR',maximumFractionDigits:0});const num=new Intl.NumberFormat('en-US',{maximumFractionDigits:1});
+const pct=v=>(v*100).toFixed(1)+'%';const change=(a,b)=>b?((a/b)-1):0;const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+function fmt(v,type){if(type==='money')return eur.format(v);if(type==='pct')return pct(v);return num.format(v)}
+function render(){const d=DATA[country],b=d.summary.benchmark,p=d.summary.post;
+ document.getElementById('dataThrough').textContent=d.post.length?d.post[d.post.length-1].d:'No post-launch data';
+ setupDateFilters(d);
+ const changes={gmv:change(p.dailyGmv,b.dailyGmv),orders:change(p.dailyOrders,b.dailyOrders),pu:change(p.dailyPu,b.dailyPu),tax:change(p.tax/p.days,b.tax/b.days),promo:p.promo-b.promo,aov:change(p.aov,b.aov)};
+ const cards=[['Daily GMV',p.dailyGmv,b.dailyGmv,'money','gmv'],['Daily orders',p.dailyOrders,b.dailyOrders,'num','orders'],['Daily purchased users',p.dailyPu,b.dailyPu,'num','pu'],['Daily tax',p.tax/p.days,b.tax/b.days,'money','tax'],['Promo burn',p.promo,b.promo,'pct','promo'],['Average AOV',p.aov,b.aov,'money','aov']];
+ document.getElementById('cards').innerHTML=cards.map(([label,v,base,type,key])=>{const c=key==='promo'?(v-base):change(v,base),good=key==='promo'?c<=0:c>=0,cls=Math.abs(c)<.001?'flat':good?'up':'down',txt=key==='promo'?`${c>=0?'+':''}${(c*100).toFixed(1)} pp vs benchmark`:`${c>=0?'+':''}${(c*100).toFixed(1)}% vs benchmark`;return `<div class="card"><div class="label">${label}</div><div class="value">${fmt(v,type)}</div><div class="delta ${cls}">${txt}</div><div class="hint">Benchmark ${fmt(base,type)}</div></div>`}).join('');
+ const metrics=[['GMV',p.dailyGmv,b.dailyGmv,'gmv'],['Orders',p.dailyOrders,b.dailyOrders,'orders'],['Purchased users',p.dailyPu,b.dailyPu,'pu'],['Tax',p.tax/p.days,b.tax/b.days,'tax'],['Promo burn',p.promo,b.promo,'promo'],['AOV',p.aov,b.aov,'aov']];document.getElementById('comparison').innerHTML=metrics.map(([n,v,base,k])=>{const max=Math.max(v,base),w1=base/max*50,w2=v/max*50,c=k==='promo'?v-base:change(v,base);return `<div class="compare-row"><div class="name">${n}</div><div class="track"><div class="before" style="width:${w1}%"></div><div class="after" style="width:${w2}%"></div></div><div class="pct ${k==='promo'?(c<=0?'up':'down'):(c>=0?'up':'down')}">${k==='promo'?(c*100).toFixed(1)+'pp':(c*100).toFixed(0)+'%'}</div></div>`}).join('');
+ renderTrend(d);renderTable(d);document.getElementById('daysPill').textContent=p.days+' days';}
+function seriesValue(x,m){return m==='orders'?x.o:m==='pu'?x.pu:m==='tax'?x.tax:m==='promo'?x.p:m==='aov'?x.aov:x.gmv}
+function setupDateFilters(d){const all=[...d.benchmark,...d.post].filter(x=>x.date).sort((a,b)=>a.date.localeCompare(b.date)),from=document.getElementById('dateFrom'),to=document.getElementById('dateTo');if(!all.length)return;const min=all[0].date,max=all[all.length-1].date;from.min=to.min=min;from.max=to.max=max;if(!from.value||from.dataset.country!==country){from.value=min;to.value=max;from.dataset.country=to.dataset.country=country}}
+function renderTrend(d){const svg=document.getElementById('trend'),from=document.getElementById('dateFrom').value,to=document.getElementById('dateTo').value,inRange=r=>(!from||r.date>=from)&&(!to||r.date<=to),benchRows=d.benchmark.filter(inRange),postRows=d.post.filter(inRange),combined=[...benchRows,...postRows];if(!combined.length){svg.setAttribute('width','760');svg.setAttribute('viewBox','0 0 760 295');svg.innerHTML='<text x="380" y="145" text-anchor="middle" class="axis-label">No data in selected date range</text>';return}const w=Math.max(760,combined.length*48),h=295,pad={l:48,r:18,t:20,b:34};svg.setAttribute('width',w);svg.setAttribute('viewBox',`0 0 ${w} ${h}`);const bench=benchRows.map(x=>seriesValue(x,metric)),post=postRows.map(x=>seriesValue(x,metric)),values=[...bench,...post],max=Math.max(...values)*1.16||1,min=0,total=combined.length;const x=i=>pad.l+i*(w-pad.l-pad.r)/Math.max(total-1,1),y=v=>pad.t+(max-v)/(max-min)*(h-pad.t-pad.b);let html='';for(let i=0;i<5;i++){let val=max*(4-i)/4,yy=y(val);html+=`<line class="gridline" x1="${pad.l}" y1="${yy}" x2="${w-pad.r}" y2="${yy}"/><text class="axis-label" x="${pad.l-7}" y="${yy+3}" text-anchor="end">${metric==='promo'?pct(val):num.format(val)}</text>`}const offset=bench.length;if(bench.length){const pts=bench.map((v,i)=>`${x(i)},${y(v)}`).join(' ');html+=`<polyline class="baseline" points="${pts}"/>`}if(post.length){const pts=post.map((v,i)=>`${x(offset+i)},${y(v)}`).join(' ');html+=`<polygon class="area" points="${x(offset)},${h-pad.b} ${pts} ${x(total-1)},${h-pad.b}"/><polyline class="postline" points="${pts}"/>`}if(bench.length&&post.length){const divider=(x(offset-1)+x(offset))/2;html+=`<line x1="${divider}" y1="${pad.t}" x2="${divider}" y2="${h-pad.b}" stroke="#8c9cb2" stroke-dasharray="4 4"/><text class="axis-label" x="${divider+5}" y="${pad.t+10}">POST-LAUNCH</text>`}combined.forEach((row,i)=>{const v=seriesValue(row,metric),isPost=i>=offset,show=i===0||i===offset-1||i===offset||i===total-1||i%Math.ceil(total/10)===0;html+=`<circle class="point" style="fill:${isPost?'#e31c79':'#003da5'}" cx="${x(i)}" cy="${y(v)}" r="4" data-i="${i}"/><text class="axis-label" x="${x(i)}" y="${h-10}" text-anchor="middle">${show?row.d:''}</text>`});svg.innerHTML=html;svg.querySelectorAll('circle').forEach(c=>{c.onmousemove=e=>{const i=+c.dataset.i,row=combined[i],v=seriesValue(row,metric),t=document.getElementById('tooltip');t.style.display='block';t.style.left=e.clientX+12+'px';t.style.top=e.clientY-20+'px';t.innerHTML=`<b>${row.d} · ${i<offset?'Pre-launch':'Post-launch'}</b><br>${metric==='promo'?pct(v):metric==='gmv'||metric==='tax'||metric==='aov'?eur.format(v):num.format(v)}`};c.onmouseleave=()=>document.getElementById('tooltip').style.display='none'});}
+function renderTable(d){document.getElementById('dailyTable').innerHTML=[...d.post].reverse().map(x=>`<tr><td>${esc(x.d)}</td><td>${eur.format(x.gmv)}</td><td>${x.o}</td><td>${x.pu}</td><td>${eur.format(x.aov)}</td><td>${pct(x.p)}</td></tr>`).join('')}
+['countryToggle','absoluteMetricSelect','percentageMetricSelect','dateFrom','dateTo','resetDates'].forEach(id=>{const element=document.getElementById(id);if(element)element.onclick=null;});
+</script>
+<script>
+let absoluteMetric='gmvInc',percentageMetric='promo',currencyMode='EUR';
+const METRICS={
+  gmvInc:{label:'Daily GMV_incTax',short:'GMV_incTax',field:'gmvInc',summary:'dailyGmvInc',type:'money',benchmark:true},
+  gmvExc:{label:'Daily GMV_excTax',short:'GMV_excTax',field:'gmvExc',summary:'dailyGmvExc',type:'money',benchmark:true},
+  netInc:{label:'Daily Net_incTax',short:'Net_incTax',field:'netInc',summary:'dailyNetInc',type:'money',benchmark:true},
+  orders:{label:'Daily orders',short:'Orders',field:'orders',summary:'dailyOrders',type:'num',benchmark:true},
+  pu:{label:'Daily purchased users',short:'Purchased users',field:'pu',summary:'dailyPu',type:'num',benchmark:true},
+  tax:{label:'Daily tax',short:'Tax',field:'tax',summary:'dailyTax',type:'money',benchmark:true},
+  discount:{label:'Daily Discount amount',short:'Discount amount',field:'discount',summary:'dailyDiscount',type:'money',benchmark:true,lowerIsBetter:true},
+  promo:{label:'%Promo burn',short:'%Promo burn',field:'promo',summary:'promo',type:'pct',benchmark:true,lowerIsBetter:true},
+  promoOrderPct:{label:'%Promo Order',short:'%Promo Order',field:'promoOrderPct',summary:'promoOrderPct',type:'pct',benchmark:true},
+  paygateFeePct:{label:'%Paygate_fee',short:'%Paygate_fee',field:'paygateFeePct',summary:'paygateFeePct',type:'pct',benchmark:true,lowerIsBetter:true},
+  aov:{label:'Average AOV',short:'AOV',field:'aov',summary:'aov',type:'money',benchmark:true}
+};
+
+function activeCurrency(){return currencyMode==='EUR'?'EUR':DATA[country].localCurrency;}
+function moneyValue(value){const rate=Number(DATA[country].eurRate)||1;return currencyMode==='EUR'?Number(value)||0:(Number(value)||0)/rate;}
+function moneyFormat(value){return new Intl.NumberFormat('en-US',{style:'currency',currency:activeCurrency(),maximumFractionDigits:0}).format(moneyValue(value));}
+function fmtV2(value,type){if(type==='money')return moneyFormat(value);if(type==='pct')return pct(Number(value)||0);return num.format(Number(value)||0);}
+function metricValue(row,config){const value=Number(row[config.field])||0;return config.type==='money'?moneyValue(value):value;}
+function syncCurrencyUI(){
+  const code=DATA[country].localCurrency;
+  document.getElementById('localCurrencyButton').textContent=code;
+  document.getElementById('currencyLabel').textContent=`Values shown in ${activeCurrency()}`;
+  document.querySelectorAll('#currencyToggle button').forEach(button=>button.classList.toggle('active',button.dataset.currencyMode===currencyMode));
+}
+
+function renderV2(){
+  const d=DATA[country],b=d.summary.benchmark,p=d.summary.post;
+  syncCurrencyUI();
+  document.getElementById('dataThrough').textContent=d.post.length?d.post[d.post.length-1].d:'No post-launch data';
+  setupDateFilters(d);
+  document.getElementById('cards').innerHTML=Object.keys(METRICS).map(key=>{
+    const m=METRICS[key],value=p[m.summary];
+    if(!m.benchmark){return `<div class="card"><div class="label">${m.label}</div><div class="value">${fmtV2(value,m.type)}</div><div class="delta post-only">Post-launch only</div><div class="hint">Benchmark not available</div></div>`;}
+    const base=b[m.summary],delta=m.type==='pct'?value-base:change(value,base),good=m.lowerIsBetter?delta<=0:delta>=0,cls=Math.abs(delta)<.001?'flat':good?'up':'down';
+    const deltaText=m.type==='pct'?`${delta>=0?'+':''}${(delta*100).toFixed(1)} pp vs benchmark`:`${delta>=0?'+':''}${(delta*100).toFixed(1)}% vs benchmark`;
+    return `<div class="card"><div class="label">${m.label}</div><div class="value">${fmtV2(value,m.type)}</div><div class="delta ${cls}">${deltaText}</div><div class="hint">Benchmark ${fmtV2(base,m.type)}</div></div>`;
+  }).join('');
+
+  document.getElementById('comparison').innerHTML=Object.keys(METRICS).map(key=>{
+    const m=METRICS[key],value=p[m.summary];
+    if(!m.benchmark){return `<div class="compare-row"><div class="name">${m.short}</div><div class="track"><div class="after" style="width:100%"></div></div><div class="pct post-only">${fmtV2(value,m.type)}</div></div>`;}
+    const base=b[m.summary],max=Math.max(value,base)||1,w1=base/max*50,w2=value/max*50,delta=m.type==='pct'?value-base:change(value,base),good=m.lowerIsBetter?delta<=0:delta>=0;
+    return `<div class="compare-row"><div class="name">${m.short}</div><div class="track"><div class="before" style="width:${w1}%"></div><div class="after" style="width:${w2}%"></div></div><div class="pct ${good?'up':'down'}">${m.type==='pct'?(delta*100).toFixed(1)+'pp':(delta*100).toFixed(0)+'%'}</div></div>`;
+  }).join('');
+  renderTrendV2(d,absoluteMetric,{svg:'absoluteTrend',axis:'absoluteYAxis'});
+  renderTrendV2(d,percentageMetric,{svg:'percentageTrend',axis:'percentageYAxis'});
+  renderTableV2(d);renderPostAnalytics(d);document.getElementById('daysPill').textContent=p.days+' days';
+}
+
+function renderTrendV2(d,metricKey,chartIds){
+  const config=METRICS[metricKey],svg=document.getElementById(chartIds.svg),yAxis=document.getElementById(chartIds.axis),from=document.getElementById('dateFrom').value,to=document.getElementById('dateTo').value;
+  const inRange=row=>(!from||row.date>=from)&&(!to||row.date<=to);
+  const benchmarkRows=config.benchmark?d.benchmark.filter(inRange):[],postRows=d.post.filter(inRange),combined=[...benchmarkRows,...postRows];
+  if(!combined.length){yAxis.innerHTML='';svg.setAttribute('width','760');svg.setAttribute('viewBox','0 0 760 295');svg.innerHTML='<text x="380" y="145" text-anchor="middle" class="axis-label">No data in selected date range</text>';return;}
+  const width=Math.max(760,combined.length*48),height=295,pad={l:66,r:18,t:20,b:34},values=combined.map(row=>metricValue(row,config)),max=Math.max(...values)*1.16||1,total=combined.length;
+  const x=index=>pad.l+index*(width-pad.l-pad.r)/Math.max(total-1,1),y=value=>pad.t+(max-value)/max*(height-pad.t-pad.b);
+  svg.setAttribute('width',width);svg.setAttribute('viewBox',`0 0 ${width} ${height}`);
+  let html='',axisHtml='<rect width="54" height="295" fill="#fff"/>';
+  for(let i=0;i<5;i++){const value=max*(4-i)/4,yy=y(value);html+=`<line class="gridline" x1="${pad.l}" y1="${yy}" x2="${width-pad.r}" y2="${yy}"/>`;axisHtml+=`<text class="axis-label" x="47" y="${yy+3}" text-anchor="end">${config.type==='pct'?pct(value):num.format(value)}</text>`;}
+  yAxis.innerHTML=axisHtml;
+  const offset=benchmarkRows.length;
+  if(offset){const points=benchmarkRows.map((row,i)=>`${x(i)},${y(metricValue(row,config))}`).join(' ');html+=`<polyline class="baseline" points="${points}"/>`;}
+  if(postRows.length){const points=postRows.map((row,i)=>`${x(offset+i)},${y(metricValue(row,config))}`).join(' ');html+=`<polygon class="area" points="${x(offset)},${height-pad.b} ${points} ${x(total-1)},${height-pad.b}"/><polyline class="postline" points="${points}"/>`;}
+  if(offset&&postRows.length){const divider=(x(offset-1)+x(offset))/2;html+=`<line x1="${divider}" y1="${pad.t}" x2="${divider}" y2="${height-pad.b}" stroke="#8c9cb2" stroke-dasharray="4 4"/><text class="axis-label" x="${divider+5}" y="${pad.t+10}">POST-LAUNCH</text>`;}
+  if(!config.benchmark){html+=`<text class="axis-label" x="${pad.l+5}" y="${pad.t+10}">POST-LAUNCH ONLY</text>`;}
+  combined.forEach((row,i)=>{const value=metricValue(row,config),isPost=i>=offset,show=i===0||i===offset-1||i===offset||i===total-1||i%Math.ceil(total/10)===0;html+=`<circle class="point" style="fill:${isPost?'#e31c79':'#003da5'}" cx="${x(i)}" cy="${y(value)}" r="4" data-i="${i}"/><text class="axis-label" x="${x(i)}" y="${height-10}" text-anchor="middle">${show?row.d:''}</text>`;});
+  svg.innerHTML=html;
+  svg.querySelectorAll('circle').forEach(circle=>{circle.onmousemove=event=>{const i=Number(circle.dataset.i),row=combined[i],value=Number(row[config.field])||0,tip=document.getElementById('tooltip');tip.style.display='block';tip.style.left=event.clientX+12+'px';tip.style.top=event.clientY-20+'px';tip.innerHTML=`<b>${row.d} · ${i<offset?'Benchmark':'Post-launch'}</b><br>${fmtV2(value,config.type)}`;};circle.onmouseleave=()=>document.getElementById('tooltip').style.display='none';});
+}
+
+function renderTableV2(d){document.getElementById('dailyTable').innerHTML=[...d.post].reverse().map(row=>`<tr><td>${esc(row.d)}</td><td>${moneyFormat(row.gmvInc)}</td><td>${moneyFormat(row.gmvExc)}</td><td>${moneyFormat(row.netInc)}</td><td>${moneyFormat(row.discount)}</td><td>${row.orders}</td><td>${row.pu}</td><td>${moneyFormat(row.aov)}</td><td>${pct(row.promo)}</td><td>${pct(row.promoOrderPct)}</td><td>${pct(row.paygateFeePct)}</td></tr>`).join('');}
+
+function renderPostAnalytics(d){
+  const analytics=d.postAnalytics||{totalOrders:0,promoOrders:0,promoOrderPct:0,avgPromoDiscountPct:0,paymentMethods:[],promoTypes:[],discountCodes:[]};
+  const maxOrders=Math.max(...analytics.paymentMethods.map(item=>item.orders),1);
+  document.getElementById('paymentMethods').innerHTML=analytics.paymentMethods.length?analytics.paymentMethods.map(item=>`<div class="method-bar"><div class="method-name">${esc(item.method)}</div><div class="method-track"><div class="method-fill" style="width:${item.orders/maxOrders*100}%"></div></div><div class="method-value">${item.orders} · ${pct(item.share)}</div></div>`).join(''):'<div class="hint">No payment method data available.</div>';
+  document.getElementById('promoOrderPct').textContent=pct(analytics.promoOrderPct);
+  document.getElementById('promoOrderCount').textContent=`${analytics.promoOrders} of ${analytics.totalOrders} orders used a promotion`;
+  document.getElementById('avgPromoDiscountPct').textContent=pct(analytics.avgPromoDiscountPct);
+  document.getElementById('discountCodeTable').innerHTML=analytics.discountCodes.length?analytics.discountCodes.map(item=>`<tr><td>${esc(item.code)}</td><td>${esc(item.promoDiscount||'No promo info')}</td><td>${esc(item.promoType)}</td><td>${esc(item.promoChannel||'No promo info')}</td></tr>`).join(''):'<tr><td colspan="4">No discount code data available.</td></tr>';
+  document.getElementById('promoTypeTable').innerHTML=analytics.promoTypes.length?analytics.promoTypes.map(item=>`<tr><td>${esc(item.type)}</td><td>${item.orders}<span class="cell-sub">${pct(item.promoOrderShare)}</span></td><td>${moneyFormat(item.totalDiscount)}</td><td>${moneyFormat(item.avgDiscountPerOrder)}</td><td>${pct(item.avgDiscountPct)}</td></tr>`).join(''):'<tr><td colspan="5">No promo type data available.</td></tr>';
+}
+
+document.getElementById('countryToggle').onclick=event=>{if(event.target.dataset.country){country=event.target.dataset.country;document.querySelectorAll('#countryToggle button').forEach(button=>button.classList.toggle('active',button.dataset.country===country));renderV2();}};
+document.getElementById('currencyToggle').onclick=event=>{if(event.target.dataset.currencyMode){currencyMode=event.target.dataset.currencyMode;renderV2();}};
+document.getElementById('absoluteMetricSelect').onchange=event=>{absoluteMetric=event.target.value;renderTrendV2(DATA[country],absoluteMetric,{svg:'absoluteTrend',axis:'absoluteYAxis'});};
+document.getElementById('percentageMetricSelect').onchange=event=>{percentageMetric=event.target.value;renderTrendV2(DATA[country],percentageMetric,{svg:'percentageTrend',axis:'percentageYAxis'});};
+function renderBothCharts(){renderTrendV2(DATA[country],absoluteMetric,{svg:'absoluteTrend',axis:'absoluteYAxis'});renderTrendV2(DATA[country],percentageMetric,{svg:'percentageTrend',axis:'percentageYAxis'});}
+document.getElementById('dateFrom').onchange=renderBothCharts;
+document.getElementById('dateTo').onchange=renderBothCharts;
+document.getElementById('resetDates').onclick=()=>{document.getElementById('dateFrom').value='';document.getElementById('dateFrom').dataset.country='';setupDateFilters(DATA[country]);renderBothCharts();document.getElementById('absoluteChartScroll').scrollLeft=0;document.getElementById('percentageChartScroll').scrollLeft=0;};
+let activeRequest = null;
+let requestTimeout = null;
+window.curaproxDashboardCallback = function(data) {
+  clearTimeout(requestTimeout);
+  if (activeRequest) { activeRequest.remove(); activeRequest = null; }
+  if (!data || !data.AE || !data.CH) {
+    document.getElementById('dataThrough').textContent = 'Invalid API data';
+    return;
+  }
+  DATA = data;
+  renderV2();
+};
+function loadDashboardData() {
+  if (activeRequest) activeRequest.remove();
+  clearTimeout(requestTimeout);
+  const script = document.createElement('script');
+  activeRequest = script;
+  script.src = API_URL + '?callback=curaproxDashboardCallback&_=' + Date.now();
+  script.onerror = function() {
+    if (activeRequest !== script) return;
+    clearTimeout(requestTimeout);
+    script.remove(); activeRequest = null;
+    document.getElementById('dataThrough').textContent = DATA ? 'Refresh failed' : 'Unable to load data';
+  };
+  requestTimeout = setTimeout(function() {
+    if (activeRequest !== script) return;
+    script.remove(); activeRequest = null;
+    document.getElementById('dataThrough').textContent = DATA ? 'Refresh timed out' : 'Loading timed out';
+  }, 30000);
+  document.head.appendChild(script);
+}
+loadDashboardData();
+setInterval(loadDashboardData, 300000);
+</script></body></html>
